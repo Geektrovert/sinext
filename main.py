@@ -7,7 +7,7 @@ from skimage.transform import resize, pyramid_reduce
 import PIL
 from PIL import Image
 
-model = load_model("CNNmodel.h5")
+model = load_model("model.h5")
 output_path = "output.txt"
 
 
