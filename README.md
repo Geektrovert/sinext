@@ -1,6 +1,6 @@
 # sinext
 
-Sign language to text with OpenCV using MNIST sign-language dataset
+Sign language to text with OpenCV using [MNIST sign-language](https://www.kaggle.com/datamunge/sign-language-mnist) dataset
 
 To **run**, clone the repository locally and run the following commands:
 
