@@ -4,9 +4,9 @@ Sign language to text with OpenCV using MNIST sign-language dataset
 
 To run, clone the repository locally and run the following commands:
 
-```python
-pip install pipenv
-pipenv install
-pipenv shell
-python main.py
+```bash
+pip install pipenv # install pipenv
+pipenv install # install dependencies
+pipenv shell # activate pipenv as a virtual env
+python main.py # start running the code
 ```
