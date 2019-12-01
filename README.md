@@ -1,4 +1,4 @@
-# sinext
+# Sinext
 
 Sign language to text with OpenCV using [MNIST sign-language](https://www.kaggle.com/datamunge/sign-language-mnist) dataset
 
