@@ -144,7 +144,7 @@ def show_written(image, pred):
     return image
 
 
-def validate(lyst):
+def validate(lyst, pred):
     """
     Validates if the prediction should be written to the file
     
@@ -156,6 +156,8 @@ def validate(lyst):
     ----------
     lyst: list
         a list that contants recently predicted outputs
+    pred: char
+        the last predicted character
     
     Returns
     -------
@@ -163,7 +165,7 @@ def validate(lyst):
         True if the output should be stored to files, otherwise False
     """
 
-    if Counter(lyst).most_common(1)[0][1] > 30:
+    if Counter(lyst)[pred] > 30:
         return True
     return False
 
@@ -206,9 +208,9 @@ if __name__ == "__main__":
 
         if pred_probab >= 0.800:
             pred = prediction_to_char(pred_class)
-            lyst.append(pred_class)
+            lyst.append(pred)
 
-            if validate(lyst):
+            if validate(lyst, pred):
                 lyst.clear()
                 with open(output_path, "a") as f:
                     f.write(prediction_to_char(pred_class))
