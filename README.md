@@ -10,3 +10,5 @@ pipenv install # install dependencies
 pipenv shell # activate pipenv as a virtual env
 python main.py # start running the code
 ```
+
+To quit the program while running, just press <kbd>q</kbd>
