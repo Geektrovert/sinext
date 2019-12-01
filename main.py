@@ -7,24 +7,75 @@ from skimage.transform import resize, pyramid_reduce
 import PIL
 from PIL import Image
 
-model = load_model("model.h5")
-output_path = "output.txt"
+model = load_model("model.h5")  # load pre-trained model
+output_path = "output.txt"  # path of the output file
 
 
 def prediction_to_char(pred):
+    """
+    Convert the prediction to ASCII character
+
+    Parameters
+    ----------
+    pred: integer
+        an integer valued between 0 to 25 that indicates the prediction
+
+    Returns
+    -------
+    char
+        an ASCII character
+    """
+
     return chr(pred + 65)
 
 
 def predict(model, image):
-    data = np.asarray(image, dtype="int32")
+    """
+    predicts the character from input image
 
+    Parameters
+    ----------
+    model: a keras model instance
+        pre-trained CNN model saved in HDF5 format
+    image: OpenCV Image
+        image of hand captured from camera
+
+    Returns
+    -------
+    float
+        probability of the predicted output
+    integer
+        an integer valued between 0 to 25 that represents the prediction
+    """
+
+    data = np.asarray(image, dtype="int32")
     pred_probab = model.predict(data)[0]
     pred_class = list(pred_probab).index(max(pred_probab))
     return max(pred_probab), pred_class
 
 
-def crop_image(image, x, y, width, height):
-    return image[y : y + height, x : x + width]
+def crop_image(image, start_x, start_y, width, height):
+    """
+    Crops an image
+
+    Parameters
+    ----------
+    image: image
+        the image that has to be cropped
+    start_x: integer
+        x co-ordinate of the starting point for cropping
+    start_y: integer
+        y co-ordinate of the starting point for cropping
+    width: integer
+        expected width of the cropped image
+    height: integer
+        expected height of the cropped image
+    
+    Returns
+    -------
+    """
+
+    return image[start_y : start_y + height, start_x : start_x + width]
 
 
 def show_pred(image, pred, probab):
@@ -94,18 +145,41 @@ def show_written(image, pred):
 
 
 def validate(lyst):
+    """
+    Validates if the prediction should be written to the file
+    
+    This function counts the outputs stored in the list, if the
+    most predicted output occurs more than 30 times, it returns True,
+    otherwise returns False
+
+    Parameters
+    ----------
+    lyst: list
+        a list that contants recently predicted outputs
+    
+    Returns
+    -------
+    boolean
+        True if the output should be stored to files, otherwise False
+    """
+
     if Counter(lyst).most_common(1)[0][1] > 30:
         return True
     return False
 
 
 def write_newline():
+    """
+    Writes a newline to the output file
+    """
+
     with open(output_path, "a") as f:
         f.write("\n")
     f.close()
 
 
-def main():
+
+if __name__ == "__main__":
     lyst = []
 
     while True:
@@ -158,6 +232,3 @@ def main():
     cv2.destroyAllWindows()
     write_newline()
 
-
-if __name__ == "__main__":
-    main()
