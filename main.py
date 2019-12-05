@@ -191,7 +191,7 @@ if __name__ == "__main__":
         cam_capture = cv2.VideoCapture(0)
         _, image_frame = cam_capture.read()
 
-        hand_image = crop_image(image_frame, 20, 200, 300, 300)
+        hand_image = crop_image(image_frame, 20, 150, 300, 300)
         image_grayscale = cv2.cvtColor(hand_image, cv2.COLOR_BGR2GRAY)
 
         image_grayscale_blurred = cv2.GaussianBlur(image_grayscale, (15, 15), 0)
@@ -204,7 +204,7 @@ if __name__ == "__main__":
 
         pred_probab, pred_class = predict(model, hand_image)
 
-        cv2.rectangle(image_frame, (20, 200), (320, 500), (255, 255, 00), 2)
+        cv2.rectangle(image_frame, (20, 150), (320, 450), (255, 255, 00), 2)
 
         if pred_probab >= 0.800:
             pred = prediction_to_char(pred_class)
